@@ -1,0 +1,270 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Our Love Story</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!-- Link external CSS -->
+    <link href="css/default.css" type="text/css" rel="stylesheet">
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/garden.js"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
+</head>
+
+<body>
+<div id="mainDiv">
+    <div id="content">
+        <!-- Code-style story -->
+        <div id="code">
+            <span class="comments">##</span><br/>
+            <span class="comments"># I am just a simple IT boy,</span><br/>
+            <span class="comments"># but I found the most precious girl in my world.</span><br/>
+            <span class="comments">##</span><br/>
+
+            i = Boy(<span class="string">"Kurt"</span>);<br/>
+            u = Girl(<span class="string">"Abby"</span>);<br/><br/>
+
+            <span class="comments"># June 2, 2024 — The day my life changed forever.</span><br/>
+            i.meet(u)<br/>
+
+            <span class="comments"># I fell deeply in love with you, Mahal.</span><br/>
+            i.fall_in_love(u)<br/>
+
+            <span class="comments"># You said yes, and that was the best moment of my life.</span><br/>
+            u.accepted(i)<br/>
+
+            <span class="comments"># Even in long distance, my love for you never fades.</span><br/>
+            LDR(u, i, distance=<span class="keyword">True</span>)<br/>
+
+            <span class="comments"># I love your laugh, especially when it sounds like animals 😂</span><br/>
+            laugh(u, i)<br/>
+
+            <span class="comments"># We go through misunderstandings sometimes.</span><br/>
+            conflict(u, i, sometimes=<span class="keyword">True</span>)<br/>
+
+            <span class="comments"># But at the end of every day, we still choose each other.</span><br/>
+            choose_each_other(u, i)<br/>
+
+            <span class="comments"># You are my peace, my comfort, my safe place.</span><br/>
+            while <span class="keyword">True</span>:<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;if u.with(i):<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;world = <span class="string">"perfect"</span><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;else:<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perfect = u<br/>
+
+            <span class="comments"># One day, I will marry you, Mahal.</span><br/>
+            i.marry(u, in_the_future=<span class="keyword">True</span>)<br/>
+
+            <span class="comments"># I will love you today, tomorrow, and forever.</span><br/>
+            i.live_happily_forever_with(u)<br/>
+        </div>
+
+        <!-- Love heart and messages -->
+        <div id="loveHeart">
+            <canvas id="garden"></canvas>
+            <div id="words">
+                <div id="messages">
+                    Abby, my Mahal, I have been loving you for
+                    <div id="elapseClock"></div>
+                </div>
+                <div id="loveu">
+                    I will always choose you, Mahal.<br/>
+                    Through distance, through fights, through everything.<br/>
+                    It will always be you.<br/>
+                    <div class="signature">- Kurt 🤍</div>
+                </div>
+
+                <!-- Valentine Button -->
+                <div id="valentineButtonContainer" style="text-align: center; margin-top: 20px; display: none;">
+                    <button id="valentineBtn" class="valentine-button">
+                        Only click me after reading all the message 💌
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Valentine Modal -->
+    <div id="valentineModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal">&times;</span>
+            <h2>Abby 💖</h2>
+            <p>Will you be my Valentine?</p>
+            <button id="yesBtn" class="modal-btn">Yes! ❤️</button>
+            <button id="noBtn" class="modal-btn">No 😢</button>
+        </div>
+    </div>
+
+    <div id="copyright">
+        Made with love by Kurt 🤍
+    </div>
+</div>
+
+<script type="text/javascript">
+    var offsetX = $("#loveHeart").width() / 2;
+    var offsetY = $("#loveHeart").height() / 2 - 55;
+    var together = new Date();
+    together.setFullYear(2024, 5, 2);
+    together.setHours(0);
+    together.setMinutes(0);
+    together.setSeconds(0);
+    together.setMilliseconds(0);
+
+    if (!document.createElement('canvas').getContext) {
+        var msg = document.createElement("div");
+        msg.id = "errorMsg";
+        msg.innerHTML = "Your browser doesn't support HTML5!";
+        document.body.appendChild(msg);
+        $("#code").css("display", "none")
+        $("#copyright").css("position", "absolute");
+        $("#copyright").css("bottom", "10px");
+        document.execCommand("stop");
+    } else {
+        setTimeout(function () {
+            startHeartAnimation();
+        }, 5000);
+
+        timeElapse(together);
+        setInterval(function () {
+            timeElapse(together);
+        }, 500);
+
+        adjustCodePosition();
+        $("#code").typewriter();
+    }
+
+    // Show the button after the love message appears
+setTimeout(function() {
+    $("#valentineButtonContainer").fadeIn();
+}, 1000);
+
+// Modal elements
+var modal = $("#valentineModal");
+var btn = $("#valentineBtn");
+var span = $("#closeModal");
+var yesBtn = $("#yesBtn");
+var noBtn = $("#noBtn");
+
+// Open modal
+btn.click(function() {
+    modal.fadeIn();
+});
+
+// Close modal on X
+span.click(function() {
+    modal.fadeOut();
+});
+
+// Close modal if clicked outside content
+$(window).click(function(event) {
+    if ($(event.target).is(modal)) {
+        modal.fadeOut();
+    }
+});
+
+// Silly No button: it "runs away" to a random screen position
+noBtn.hover(function() {
+    var screenWidth = $(window).width() - noBtn.width();
+    var screenHeight = $(window).height() - noBtn.height();
+    var randX = Math.floor(Math.random() * screenWidth);
+    var randY = Math.floor(Math.random() * screenHeight);
+
+    noBtn.css({
+        position: 'fixed',
+        left: randX + 'px',
+        top: randY + 'px'
+    });
+});
+
+yesBtn.click(function() {
+    modal.fadeOut();
+
+    // 18-second celebration
+    var duration = 18000;
+
+    // 1️⃣ Start floating hearts continuously
+    var heartInterval = setInterval(function() {
+        let heart = $('<div class="heart">❤️</div>').appendTo("body");
+        let size = Math.random() * 20 + 20;
+        let startX = Math.random() * $(window).width();
+        let startY = $(window).height();
+        let endX = startX + (Math.random() * 200 - 100);
+        let endY = startY - (Math.random() * 400 + 100);
+
+        heart.css({
+            position: 'absolute',
+            left: startX + 'px',
+            top: startY + 'px',
+            fontSize: size + 'px',
+            opacity: 1,
+            pointerEvents: 'none'
+        });
+
+        heart.animate({
+            left: endX,
+            top: endY,
+            opacity: 0
+        }, 3000, function() { heart.remove(); });
+    }, 400); // new heart every 0.4s
+
+    // 2️⃣ Start sparkle effect continuously
+    var sparkleInterval = setInterval(function() {
+        let sparkle = $('<div class="sparkle">💖</div>').appendTo("body");
+        let size = Math.random() * 15 + 15;
+        let startX = Math.random() * $(window).width();
+        let startY = Math.random() * $(window).height();
+
+        sparkle.css({
+            position: 'absolute',
+            left: startX + 'px',
+            top: startY + 'px',
+            fontSize: size + 'px',
+            opacity: 0,
+            pointerEvents: 'none'
+        });
+
+        sparkle.animate({
+            top: startY - 150,
+            opacity: 1
+        }, 1500).fadeOut(1000, function() { sparkle.remove(); });
+    }, 500); // new sparkle every 0.5s
+
+    // 3️⃣ Background pulse effect
+    $("body").css("transition", "background 0.5s");
+    var pulseInterval = setInterval(function() {
+        $("body").css("background", "#ffd1dc");
+        setTimeout(function() { $("body").css("background", "#fdc9d1"); }, 500);
+    }, 1000);
+
+    // 4️⃣ Show video immediately
+    $("#videoModal").fadeIn();
+    $("#valentineVideo")[0].play();
+
+    // Stop all effects after 18 seconds
+    setTimeout(function() {
+        clearInterval(heartInterval);
+        clearInterval(sparkleInterval);
+        clearInterval(pulseInterval);
+        $("body").css("background", "#fdc9d1");
+    }, duration);
+
+    alert("Yay! I'm so happy! ❤️ I love you, Mahal!");
+});
+
+</script>
+</body>
+<!-- Video Modal -->
+<div id="videoModal" class="modal">
+    <div class="modal-content" style="width: 600px; height: 400px;">
+        <span id="closeVideoModal">&times;</span>
+        <video id="valentineVideo" width="100%" height="100%" controls autoplay>
+            <source src="vid/valentines.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+    </div>
+</div>
+
+</html>
